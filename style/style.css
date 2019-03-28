@@ -189,25 +189,25 @@ header #site-logo img {
 	background-size: 100% 100%;
 }
 .gitee-logo:before {
-	background-image: url(http://127.0.0.1:8000/images/icon/gitee.svg);
+	background-image: url(../images/icon/gitee.svg);
 }
 .github-logo:before {
-	background-image: url(http://127.0.0.1:8000/images/icon/github.svg);
+	background-image: url(../images/icon/github.svg);
 }
 .gitlab-logo:before {
-	background-image: url(http://127.0.0.1:8000/images/icon/gitlab.svg);
+	background-image: url(../images/icon/gitlab.svg);
 }
 .wechat-logo:before {
-	background-image: url(http://127.0.0.1:8000/images/icon/wechat.svg);
+	background-image: url(../images/icon/wechat.svg);
 }
 .wepay-logo:before {
-	background-image: url(http://127.0.0.1:8000/images/icon/wepay.svg);
+	background-image: url(../images/icon/wepay.svg);
 }
 .alipay-logo:before {
-	background-image: url(http://127.0.0.1:8000/images/icon/alipay.svg);
+	background-image: url(../images/icon/alipay.svg);
 }
 .email-logo:before {
-	background-image: url(http://127.0.0.1:8000/images/icon/email.svg);
+	background-image: url(../images/icon/email.svg);
 }
 
 
