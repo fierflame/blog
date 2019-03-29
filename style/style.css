@@ -497,19 +497,14 @@ div#archive-sidebar li {
 	list-style: none;
 	padding: 0;
 }
-@media screen and (min-width: 990px) {
-	.blog-toc {
-		float: right;
-		width: 230px;
+/*
+@media screen and (min-width: 960px) {
+	main {
+		float: left;
+		width: calc( 100% - 320px );
 	}
 }
-@media screen and (min-width: 1280px) {
-	.blog-toc {
-		width: 300px;
-	}
-}
-
-
+*/
 
 
 

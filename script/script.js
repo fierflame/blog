@@ -1,3 +1,27 @@
+function loadJs(url,fn) {
+	var script = document.createElement("script");
+	script.setAttribute("type", "text/javascript");
+	script.setAttribute("charset", "UTF-8");
+	script.setAttribute("src", url);
+	if(typeof fn === "function") {
+		if(window.attachEvent) {
+			script.onreadystatechange = function() {
+				var e = script.readyState;
+				if(e === "loaded"||e === "complete"){
+					script.onreadystatechange = null;
+					fn();
+				}
+			}
+		} else {
+			script.onload = function() {
+				script.onload = null;
+				fn();
+			}
+		}
+	}
+	(document.getElementsByTagName("head")[0]||document.head||document.documentElement).appendChild(script);
+	return script;
+}
 
 
 var mapSource = ["/blog/index.json", "/ecmascript/index.json", ];
@@ -341,4 +365,32 @@ window.addEventListener("load", function(){
 		fetch(url).then(x=>x.json()).then(dataed)
 	})
 	
+});
+
+
+window.addEventListener("load", function(){
+var appid = 'cysoEHtC7'; 
+var conf = 'prod_11a2b98740a76cafbd415d7613b99380'; 
+var width = window.innerWidth || document.documentElement.clientWidth;
+
+var url, id = '';
+if (width < 840) {
+	url = 'https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf;
+	id = "changyan_mobile_js";
+} else {
+	url = 'https://changyan.sohu.com/upload/changyan.js';
+}
+// TODO 天机到 more-list
+/**
+	<div class="not-print" id="cyHotnews" role="cylabs" data-use="hotnews"></div>
+	<div class="not-print" id="cyReping" role="cylabs" data-use="reping"></div>
+	<div class="not-print" id="cyHotusers" role="cylabs" data-use="hotusers"></div>
+ */
+loadJs(url, function(){
+	if (window.changyan) { window.changyan.api.config({appid:appid, conf:conf}); }
+	loadJs('https://changyan.itc.cn/js/lib/jquery.js', function(){
+		loadJs('https://changyan.sohu.com/js/changyan.labs.https.js?appid=' + appid);
+	});
+}).id = id;
+
 });
