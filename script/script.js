@@ -386,11 +386,12 @@ if (width < 840) {
 	<div class="not-print" id="cyReping" role="cylabs" data-use="reping"></div>
 	<div class="not-print" id="cyHotusers" role="cylabs" data-use="hotusers"></div>
  */
+/*
 loadJs(url, function(){
 	if (window.changyan) { window.changyan.api.config({appid:appid, conf:conf}); }
 	loadJs('https://changyan.itc.cn/js/lib/jquery.js', function(){
 		loadJs('https://changyan.sohu.com/js/changyan.labs.https.js?appid=' + appid);
 	});
 }).id = id;
-
+*/
 });
