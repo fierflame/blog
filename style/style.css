@@ -15,12 +15,7 @@
 	background: #aaa;
 }
 
-* {
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
-	list-style: none;
-}
+* { padding: 0; margin: 0; box-sizing: border-box; }
 html {font-size: 16px; height: 100%; background: #FFF5E1;}
 @media print{ html { background: none; } }
 p {font-size: 16px;text-indent: 2em;}
@@ -30,7 +25,7 @@ h2 {font-size: 1.2em;}
 h1 {font-size: 1.3em;}
 a {color: #0088FF; text-decoration: none;}
 a:hover {text-decoration: underline;}
-
+ul,ol { padding-left: 1em; }
 /*
 @media print{
 	a[href]:after {
@@ -71,6 +66,8 @@ nav {
 nav ul{
 	border-bottom: 2px solid;
 	margin: 10px;
+	padding: 0;
+	list-style: none;
 }
 nav ul:last-child{
 	border-bottom: none;
