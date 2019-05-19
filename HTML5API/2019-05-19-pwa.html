@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>PWA: 渐进式 Web 应用 # HTML5 API | 博客 @ 王晨旭的个人网站</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#08F">
+	<link rel="stylesheet" href="/style/style.css">
+	<link rel="stylesheet" href="/style/highlight/default.css">
+	
+	
+	
+	<script src="/script/highlight.pack.js"></script>
+	<script src="/script/qrcode.min.js"></script>
+	<script src="/script/script.js"></script>
+	
+
+</head>
+<body>
+	<header>
+	<div id="open-header" onclick="this.parentNode.classList.toggle('open')"></div>
+	<div id="header-bar">
+		<a href="/" id="site-logo">
+			<img src="/favicon.svg" />
+			王晨旭的个人网站
+		</a>
+	</div>
+	<nav>
+		<ul>
+			<li><a href="/">首页</a></li>
+		<li><a href="/HTML5API">HTML5 API</a></li><li><a href="/server">服务器</a></li>
+		</ul>
+
+
+		
+	</nav>
+	<ul id="qrcode-links">
+		<li title="微信公众号: 未来开发者(wangchenxu-net)"><a target="_blank" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzU3NjMxNDgzMw==" class="wechat-logo"></a><img src="/images/qrcode/wangchenxu-net.svg"/></li>
+		<li title="码云: wangchenxu-net"><a target="_blank" href="https://gitee.com/wangchenxu-net" class="gitee-logo"></a></li>
+		<li title="gitlab: wangchenxu-net"><a target="_blank" href="https://gitlab.com/wangchenxu-net" class="gitlab-logo"></a></li>
+		<li title="github: wangchenxu-net"><a target="_blank" href="https://github.com/wangchenxu-net" class="github-logo"></a></li>
+		<li title="捐助我：支付宝"><div class="alipay-logo"></div><img src="/images/qrcode/alipay.png"/></li>
+		<li title="捐助我：微信支付"><div class="wepay-logo"></div><img src="/images/qrcode/wepay.png"/></li>
+		<li title="电子邮箱"><a target="_blank" href="mailto:www@wangchenxu.net" class="email-logo"></a></li>
+	</ul>
+</header>
+	<div>
+	<div class="only-print" data-page-card data-title="PWA: 渐进式 Web 应用"></div>
+<main>
+<div class="blog-info">
+	<span class="blog-time">2019-05-19</span>
+	<h1 class="blog-title">
+		[<a href="/HTML5API">HTML5 API</a>]
+	PWA: 渐进式 Web 应用</h1>
+</div>
+<article class="blog-main style-context-box" need-article-nav>
+	<h2 id="-">说明</h2>
+<p>虽然我将这篇文章归到 HTML5 API 这一分类中，但确切的说 PWA 并不是单一API，而是对多种API的综合应用。特别的，一个完整的 PWA 需要两个特别的文件——服务线程（一般为 service-worker.js ）和Web应用清单（一般为 <code>manifest.json</code>，或 <code>manifest.webmanifest</code> ）,本文将主要对这两个文件展开介绍。</p><h2 id="-service-worker-">服务线程(service worker)</h2>
+<p>服务线程(service worker)，是独立与页面的 WebWorker，其在启动后，会一直在后台运营（直到浏览器被关闭，或在一段时间内，没有该应用打开的的页面），并且可以拦截 Web 请求，将本地缓存甚至是即时生成的数据作为相应返回给原页面。</p><h3 id="-">服务线程上下文环境</h3>
+<p>因为所有页面的请求可能都要经过服务线程，如果服务线程一但被堵塞，将会导致所有页面的请求都被堵塞，所以服务线程中的所有API均为异步API。</p><p>服务线程上下文环境是<code>ServiceWorkerGlobalScope</code>的实例，除了ECMAScript定义的语法级对象外，主要还有以下几个属性：</p><ul>
+<li><code>self</code>: 指上下文环境本身，类似普通浏览器环境下的 <code>window</code> 对象，继承自<code>WorkerGlobalScope</code></li>
+<li><code>caches</code>：<code>Cache API</code>，同普通浏览器环境下的 <code>caches</code> 对象，继承自<code>WorkerGlobalScope</code></li>
+<li><code>fetch</code>: 用于网络请求的函数，在服务线程中不支持<code>XMLHttpRequest</code>，请用<code>fetch</code>方法函数，继承自<code>WorkerGlobalScope</code>，但进行了重载</li>
+<li><code>clients</code>: 其有打开窗口及获取已有窗口等的异步方法</li>
+<li><code>registration</code>: 当前服务线程的状态等</li>
+<li><code>skipWaiting</code>: 在服务线程脚本更新后，用于强制重起服务线程</li>
+</ul>
+<p>另外有与<code>windows</code>中同名同用法(或功能相似)的对象，均继承自<code>WorkerGlobalScope</code>，具体见下表：</p><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>-</th>
+<th>-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>btoa</code></td>
+<td><code>location</code></td>
+<td><code>indexedDB</code></td>
+<td><code>addEventListener</code></td>
+</tr>
+<tr>
+<td><code>atob</code></td>
+<td><code>setTimeout</code></td>
+<td><code>navigator</code></td>
+<td><code>removeEventListener</code></td>
+</tr>
+<tr>
+<td><code>crypto</code></td>
+<td><code>setInterval</code></td>
+<td><code>performance</code></td>
+<td><code>dispatchEvent</code></td>
+</tr>
+<tr>
+<td><code>fonts</code></td>
+<td><code>clearTimeout</code></td>
+<td><code>importScripts</code></td>
+<td><code>createImageBitmap</code></td>
+</tr>
+<tr>
+<td><code>origin</code></td>
+<td><code>clearInterval</code></td>
+<td><code>queueMicrotask</code></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>但因为上下文环境的不通，部分API不支持或缺少部分属性成员，如<code>navigator</code>没有<code>keyboard</code>、<code>clipboard</code>、<code>cookieEnabled</code>等成员。<br>25: “”，继承自<code>WorkerGlobalScope</code></p><h3 id="-">事件</h3>
+<p><code>ServiceWorkerGlobalScope</code> 主要有以下几个事件：</p><ul>
+<li><code>install</code>: 服务线程安装事件</li>
+<li><code>activate</code>: 服务线程激活事件</li>
+<li><code>fetch</code>: 页面或其他线程发起网络请求时的事件</li>
+<li><code>pushsubscriptionchange</code>: 推送订阅改变事件，属 <code>Push API</code></li>
+<li><code>push</code>: 推送事件，属 <code>Push API</code></li>
+<li><code>message</code>: 消息事件，<code>postMessage</code> 触发的事件</li>
+<li><code>notificationclick</code>: 通知点击事件，属 <code>Notification API</code></li>
+<li><code>notificationclose</code>: 通知关闭事件，属 <code>Notification API</code></li>
+</ul>
+<h3 id="caches"><code>caches</code></h3>
+<p><code>ServiceWorkerGlobalScope.caches</code> 是 <code>CacheStorage</code> 的实例，主要有以下几个方法：</p><ul>
+<li><code>match(request, options)</code>: 返回所有缓存库中第一个与请求匹配的<code>Response</code>，返回值为<code>Promise&lt;Response&gt;</code></li>
+<li><code>open(name)</code>: 打开一个缓存库，返回值为<code>Promise&lt;Cache&gt;</code></li>
+<li><code>delete(name)</code>: 删除一个缓存库，返回值为<code>Promise&lt;boolean&gt;</code></li>
+<li><code>has(name)</code>: 判断是否存在指定的缓存库，返回值为<code>Promise&lt;boolean&gt;</code></li>
+<li><code>keys()</code>: 获取所有的缓存库名称，返回值为<code>Promise&lt;string[]&gt;</code></li>
+</ul>
+<h3 id="cache-"><code>Cache</code> 实例</h3>
+<p>通过 <code>ServiceWorkerGlobalScope.caches.open</code> 得到一个 <code>Cache</code>实例，所有的缓存操作均在此对象上实现。其实例主要有以下几个方法：</p><ul>
+<li><code>match(request, options)</code>: 返回缓存库中第一个与请求匹配的<code>Response</code>，返回值为<code>Promise&lt;Response&gt;</code></li>
+<li><code>matchAll(request, options)</code>: 返回缓存库中所有与请求匹配的<code>Response</code>，返回值为<code>Promise&lt;Response[]&gt;</code></li>
+<li><code>add(request)</code>: 将请求及对应的<code>Response</code>加入到缓存库中，<code>Response</code>将通过自动<code>fetch</code>获得</li>
+<li><code>add(requests)</code>: 将多个请求及对应的<code>Response</code>加入到缓存库中，<code>Response</code>将通过自动<code>fetch</code>获得</li>
+<li><code>put(request, response)</code>: 将指定的请求及对应相应关联后加入到缓存库中</li>
+<li><code>delete(request, options)</code>: 删除与请求匹配的缓存</li>
+</ul>
+<h3 id="install-activate-"><code>install</code> 事件与 <code>activate</code> 事件</h3>
+<p>由于事件是通过继承<code>EventTarget</code>类实现的，所以，使用传统的方式，均会忽略事件回调函数返回的Promise对象，但在服务线程的安装、激活过程中，可能需要一些异步的操作，例如提前缓存部分页面。为确保触发<code>install</code>、<code>activate</code> 事件后，能够保证相关操作完成后再结束这两种状态，<code>install</code> 事件与 <code>activate</code> 事件提供了 <code>waitUntil</code> 方法。</p><p><code>waitUntil</code> 方法接收一个 <code>Promise</code> 对象作为参数，当该 <code>Promise</code> 对象状态转为 <code>fulfilled</code>，<code>rejected</code>后，<code>install</code>、<code>activate</code>状态才会结束，单如果不调用<code>waitUntil</code> 方法则直接结束。</p><h3 id="fetch-"><code>fetch</code> 事件</h3>
+<p><code>fetch</code> 事件中可以劫持其他页面祸线程发起的网络请求，返回一个自定义的相应。<br>如果需要返回自定义请求，需要劫持原有请求，需要调用<code>fetch</code> 事件的 <code>respondWith</code> 方法。</p><p><code>respondWith</code> 方法接收一个 <code>Promise&lt;Response&gt;</code> 对象作为参数，该<code>Response</code>对象将作为原请求的<code>Response</code>。</p><p>此<code>Response</code>对象，可以是在<code>fetch</code> 事件中调用<code>fetch</code>方法得到的<code>Response</code>，也可以是<code>caches</code>中缓存的<code>Response</code>，甚至是可以通过调用<code>Response</code>构造方法创建的<code>Response</code>对象。</p><h3 id="-">其他说明</h3>
+<p>目前，服务线程只能采用<code>caches</code>和<code>indexedDB</code>两种存储方式。</p><h2 id="web-web-app-manifest-">Web应用清单 (Web App Manifest)</h2>
+<p>Web应用清单主要提供有关应用程序的信息（例如名称、图标和描述）。本质为JSON文件，其MIME建议为<code>application/manifest+json</code></p><p>其主要有以下几个属性：</p><ul>
+<li><code>name</code>: 必须，应用的名称</li>
+<li><code>short_name</code>: 应用的简称，一般用于主屏幕名称</li>
+<li><code>start_url</code>: 必须，应用的启动地址</li>
+<li><code>display</code>: 应用的像是方式， 目前支持：<ul>
+<li><code>browser</code>: 按照常规网页打开，默认值</li>
+<li><code>minimal-ui</code>: 只保留控制导航的UI元素</li>
+<li><code>standalone</code>: 按照普通应用的形式显示</li>
+<li><code>fullscreen</code>: 全屏显示</li>
+</ul>
+</li>
+<li><code>background_color</code>: 浏览器自动生产的启动页的背景色，为 CSS颜色值</li>
+<li><code>description</code>: 应用的描述</li>
+<li><code>icons</code>: 必须，应用的图标，用于桌面图标及启动页面，是一个数组，每个成员有以下几个属性：<ul>
+<li><code>src</code>: 必须，图标的地址</li>
+<li><code>sizes</code>: 必须，包含空格分隔图像尺寸的字符串</li>
+<li><code>type</code>: 图标的mine类型</li>
+</ul>
+</li>
+<li><code>orientation</code>: 显示方向，可以是以下值之一：<ul>
+<li><code>any</code></li>
+<li><code>natural</code></li>
+<li><code>landscape</code></li>
+<li><code>landscape-primary</code></li>
+<li><code>landscape-secondary</code></li>
+<li><code>portrait</code></li>
+<li><code>portrait-primary</code></li>
+<li><code>portrait-secondary</code></li>
+</ul>
+</li>
+<li><code>scope</code>: 定义此网站上下文的导航范围，如果超出这个范围将按照普通页面展示</li>
+<li><code>theme_color</code>: 网站的默认主题色</li>
+</ul>
+<h2 id="-">启动服务线程并加入清单文件</h2>
+<p>加入清单文件，只需要一个<code>link</code>标签即可，如：</p><pre><code class="html">&lt;link rel=&quot;manifest&quot; href=&quot;/manifest.json&quot;&gt;</code></pre>
+<p>启动服务线程需要通过JavaScript实现：</p><pre><code class="JavaScript">if (&#39;serviceWorker&#39; in navigator) {           
+  navigator.serviceWorker.register(&#39;/service-worker.js&#39;, {scope: &#39;/&#39;}).then(function (registration) {
+    // 注册成功
+    console.log(&#39;ServiceWorker registration successful with scope: &#39;, registration.scope);
+  }).catch(function (err) {                   
+    // 注册失败 :(
+    console.log(&#39;ServiceWorker registration failed: &#39;, err);
+  });
+}</code></pre>
+
+</article>
+<div class="style-context-box not-print" data-clipboard-tip="此文链接:" data-clipboard-data data-clipboard-type="url"></div>
+<div class="base-page-nav">
+	
+		<div>已经是第一篇</div>
+	
+	
+		<a href="/server/2019-03-29-Let-s-Encrypt-通配符证书申请教程.html" title="Let&#39;s Encrypt 通配符证书申请教程">下一篇：Let&#39;s Encrypt 通配符证书申请教程</a>
+	
+</div>
+<div class="only-print" data-page-card data-title="PWA: 渐进式 Web 应用"></div>
+<div class="not-print" id="cyReward" role="cylabs" data-use="reward"></div>
+<div class="not-print" id="cyEmoji" role="cylabs" data-use="emoji"></div>
+<div class="not-print" id="SOHUCS"></div>
+</main>
+<div class="not-print" id="more-list"></div>
+
+</div>
+	<footer>
+	<div>
+		&copy;2018- 2019
+		<a href="//www.wangchenxu.net">王晨旭的网站</a>
+		<script src="//s19.cnzz.com/stat.php?id=1274150741&show=pic"></script>
+	</div>
+</footer>
+</body>
+</html>
