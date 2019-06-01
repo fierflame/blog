@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>PWA: 渐进式 Web 应用 # HTML5 API | 博客 @ 王晨旭的个人网站</title>
+	<title>PWA: 渐进式 Web 应用 # HTML5 API | 博客 @ 王晨旭的网站</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="theme-color" content="#08F">
 	<link rel="stylesheet" href="/style/style.css">
@@ -22,7 +22,7 @@
 	<div id="header-bar">
 		<a href="/" id="site-logo">
 			<img src="/favicon.svg" />
-			王晨旭的个人网站
+			王晨旭的网站
 		</a>
 	</div>
 	<nav>
@@ -31,8 +31,7 @@
 		<li><a href="/HTML5API">HTML5 API</a></li><li><a href="/server">服务器</a></li>
 		</ul>
 
-
-		
+		<ul><li><a target="_blank" href="http://tools.wangchenxu.net/">开发者工具</a></li></ul>
 	</nav>
 	<ul id="qrcode-links">
 		<li title="微信公众号: 未来开发者(wangchenxu-net)"><a target="_blank" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzU3NjMxNDgzMw==" class="wechat-logo"></a><img src="/images/qrcode/wangchenxu-net.svg"/></li>
@@ -48,15 +47,15 @@
 	<div class="only-print" data-page-card data-title="PWA: 渐进式 Web 应用"></div>
 <main>
 <div class="blog-info">
-	<span class="blog-time">2019-05-19</span>
+	<span class="blog-time"></span>
 	<h1 class="blog-title">
 		[<a href="/HTML5API">HTML5 API</a>]
 	PWA: 渐进式 Web 应用</h1>
 </div>
 <article class="blog-main style-context-box" need-article-nav>
-	<h2 id="-">说明</h2>
-<p>虽然我将这篇文章归到 HTML5 API 这一分类中，但确切的说 PWA 并不是单一API，而是对多种API的综合应用。特别的，一个完整的 PWA 需要两个特别的文件——服务线程（一般为 service-worker.js ）和Web应用清单（一般为 <code>manifest.json</code>，或 <code>manifest.webmanifest</code> ）,本文将主要对这两个文件展开介绍。</p><h2 id="-service-worker-">服务线程(service worker)</h2>
-<p>服务线程(service worker)，是独立与页面的 WebWorker，其在启动后，会一直在后台运营（直到浏览器被关闭，或在一段时间内，没有该应用打开的的页面），并且可以拦截 Web 请求，将本地缓存甚至是即时生成的数据作为相应返回给原页面。</p><h3 id="-">服务线程上下文环境</h3>
+	<h2 id="说明">说明</h2>
+<p>虽然我将这篇文章归到 HTML5 API 这一分类中，但确切的说 PWA 并不是单一API，而是对多种API的综合应用。特别的，一个完整的 PWA 需要两个特别的文件——服务线程（一般为 service-worker.js ）和Web应用清单（一般为 <code>manifest.json</code>或 <code>manifest.webmanifest</code> ）,本文将主要对这两个文件展开介绍。</p><h2 id="服务线程service-worker">服务线程(service worker)</h2>
+<p>服务线程(service worker)，是独立与页面的 WebWorker，其在启动后，会一直在后台运营（直到浏览器被关闭，或在一段时间内，没有该应用打开的的页面），并且可以拦截 Web 请求，将本地缓存甚至是即时生成的数据作为相应返回给原页面。</p><h3 id="服务线程上下文环境">服务线程上下文环境</h3>
 <p>因为所有页面的请求可能都要经过服务线程，如果服务线程一但被堵塞，将会导致所有页面的请求都被堵塞，所以服务线程中的所有API均为异步API。</p><p>服务线程上下文环境是<code>ServiceWorkerGlobalScope</code>的实例，除了ECMAScript定义的语法级对象外，主要还有以下几个属性：</p><ul>
 <li><code>self</code>: 指上下文环境本身，类似普通浏览器环境下的 <code>window</code> 对象，继承自<code>WorkerGlobalScope</code></li>
 <li><code>caches</code>：<code>Cache API</code>，同普通浏览器环境下的 <code>caches</code> 对象，继承自<code>WorkerGlobalScope</code></li>
@@ -105,7 +104,7 @@
 <td></td>
 </tr>
 </tbody></table>
-<p>但因为上下文环境的不通，部分API不支持或缺少部分属性成员，如<code>navigator</code>没有<code>keyboard</code>、<code>clipboard</code>、<code>cookieEnabled</code>等成员。<br>25: “”，继承自<code>WorkerGlobalScope</code></p><h3 id="-">事件</h3>
+<p>但因为上下文环境的不通，部分API不支持或缺少部分属性成员，如<code>navigator</code>没有<code>keyboard</code>、<code>clipboard</code>、<code>cookieEnabled</code>等成员。</p><h3 id="事件">事件</h3>
 <p><code>ServiceWorkerGlobalScope</code> 主要有以下几个事件：</p><ul>
 <li><code>install</code>: 服务线程安装事件</li>
 <li><code>activate</code>: 服务线程激活事件</li>
@@ -124,7 +123,7 @@
 <li><code>has(name)</code>: 判断是否存在指定的缓存库，返回值为<code>Promise&lt;boolean&gt;</code></li>
 <li><code>keys()</code>: 获取所有的缓存库名称，返回值为<code>Promise&lt;string[]&gt;</code></li>
 </ul>
-<h3 id="cache-"><code>Cache</code> 实例</h3>
+<h3 id="cache-实例"><code>Cache</code> 实例</h3>
 <p>通过 <code>ServiceWorkerGlobalScope.caches.open</code> 得到一个 <code>Cache</code>实例，所有的缓存操作均在此对象上实现。其实例主要有以下几个方法：</p><ul>
 <li><code>match(request, options)</code>: 返回缓存库中第一个与请求匹配的<code>Response</code>，返回值为<code>Promise&lt;Response&gt;</code></li>
 <li><code>matchAll(request, options)</code>: 返回缓存库中所有与请求匹配的<code>Response</code>，返回值为<code>Promise&lt;Response[]&gt;</code></li>
@@ -133,10 +132,10 @@
 <li><code>put(request, response)</code>: 将指定的请求及对应相应关联后加入到缓存库中</li>
 <li><code>delete(request, options)</code>: 删除与请求匹配的缓存</li>
 </ul>
-<h3 id="install-activate-"><code>install</code> 事件与 <code>activate</code> 事件</h3>
-<p>由于事件是通过继承<code>EventTarget</code>类实现的，所以，使用传统的方式，均会忽略事件回调函数返回的Promise对象，但在服务线程的安装、激活过程中，可能需要一些异步的操作，例如提前缓存部分页面。为确保触发<code>install</code>、<code>activate</code> 事件后，能够保证相关操作完成后再结束这两种状态，<code>install</code> 事件与 <code>activate</code> 事件提供了 <code>waitUntil</code> 方法。</p><p><code>waitUntil</code> 方法接收一个 <code>Promise</code> 对象作为参数，当该 <code>Promise</code> 对象状态转为 <code>fulfilled</code>，<code>rejected</code>后，<code>install</code>、<code>activate</code>状态才会结束，单如果不调用<code>waitUntil</code> 方法则直接结束。</p><h3 id="fetch-"><code>fetch</code> 事件</h3>
-<p><code>fetch</code> 事件中可以劫持其他页面祸线程发起的网络请求，返回一个自定义的相应。<br>如果需要返回自定义请求，需要劫持原有请求，需要调用<code>fetch</code> 事件的 <code>respondWith</code> 方法。</p><p><code>respondWith</code> 方法接收一个 <code>Promise&lt;Response&gt;</code> 对象作为参数，该<code>Response</code>对象将作为原请求的<code>Response</code>。</p><p>此<code>Response</code>对象，可以是在<code>fetch</code> 事件中调用<code>fetch</code>方法得到的<code>Response</code>，也可以是<code>caches</code>中缓存的<code>Response</code>，甚至是可以通过调用<code>Response</code>构造方法创建的<code>Response</code>对象。</p><h3 id="-">其他说明</h3>
-<p>目前，服务线程只能采用<code>caches</code>和<code>indexedDB</code>两种存储方式。</p><h2 id="web-web-app-manifest-">Web应用清单 (Web App Manifest)</h2>
+<h3 id="install-事件与-activate-事件"><code>install</code> 事件与 <code>activate</code> 事件</h3>
+<p>由于事件是通过继承<code>EventTarget</code>类实现的，所以，使用传统的方式，均会忽略事件回调函数返回的Promise对象，但在服务线程的安装、激活过程中，可能需要一些异步的操作，例如提前缓存部分页面。为确保触发<code>install</code>、<code>activate</code> 事件后，能够保证相关操作完成后再结束这两种状态，<code>install</code> 事件与 <code>activate</code> 事件提供了 <code>waitUntil</code> 方法。</p><p><code>waitUntil</code> 方法接收一个 <code>Promise</code> 对象作为参数，当该 <code>Promise</code> 对象状态转为 <code>fulfilled</code>，<code>rejected</code>后，<code>install</code>、<code>activate</code>状态才会结束，单如果不调用<code>waitUntil</code> 方法则直接结束。</p><h3 id="fetch-事件"><code>fetch</code> 事件</h3>
+<p><code>fetch</code> 事件中可以劫持其他页面祸线程发起的网络请求，返回一个自定义的相应。<br>如果需要返回自定义请求，需要劫持原有请求，需要调用<code>fetch</code> 事件的 <code>respondWith</code> 方法。</p><p><code>respondWith</code> 方法接收一个 <code>Promise&lt;Response&gt;</code> 对象作为参数，该<code>Response</code>对象将作为原请求的<code>Response</code>。</p><p>此<code>Response</code>对象，可以是在<code>fetch</code> 事件中调用<code>fetch</code>方法得到的<code>Response</code>，也可以是<code>caches</code>中缓存的<code>Response</code>，甚至是可以通过调用<code>Response</code>构造方法创建的<code>Response</code>对象。</p><h3 id="其他说明">其他说明</h3>
+<p>目前，服务线程只能采用<code>caches</code>和<code>indexedDB</code>两种存储方式。</p><h2 id="web应用清单-web-app-manifest">Web应用清单 (Web App Manifest)</h2>
 <p>Web应用清单主要提供有关应用程序的信息（例如名称、图标和描述）。本质为JSON文件，其MIME建议为<code>application/manifest+json</code></p><p>其主要有以下几个属性：</p><ul>
 <li><code>name</code>: 必须，应用的名称</li>
 <li><code>short_name</code>: 应用的简称，一般用于主屏幕名称</li>
@@ -170,7 +169,7 @@
 <li><code>scope</code>: 定义此网站上下文的导航范围，如果超出这个范围将按照普通页面展示</li>
 <li><code>theme_color</code>: 网站的默认主题色</li>
 </ul>
-<h2 id="-">启动服务线程并加入清单文件</h2>
+<h2 id="启动服务线程并加入清单文件">启动服务线程并加入清单文件</h2>
 <p>加入清单文件，只需要一个<code>link</code>标签即可，如：</p><pre><code class="html">&lt;link rel=&quot;manifest&quot; href=&quot;/manifest.json&quot;&gt;</code></pre>
 <p>启动服务线程需要通过JavaScript实现：</p><pre><code class="JavaScript">if (&#39;serviceWorker&#39; in navigator) {           
   navigator.serviceWorker.register(&#39;/service-worker.js&#39;, {scope: &#39;/&#39;}).then(function (registration) {

@@ -64,13 +64,13 @@ nav {
 	overflow: auto;
 }
 nav ul{
-	border-bottom: 2px solid;
-	margin: 10px;
-	padding: 0;
+	border-top: 2px solid;
+	margin: 0 10px;
+	padding: 10px 0;
 	list-style: none;
 }
-nav ul:last-child{
-	border-bottom: none;
+nav ul:first-child{
+	border-top: none;
 }
 nav li{
 	border-bottom: 1px dashed;
