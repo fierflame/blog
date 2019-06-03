@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@gensety/renderer-ejs": "^0.1.0",
+    "@gensety/renderer-markdown": "^0.1.2"
+  }
+}
