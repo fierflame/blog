@@ -1,0 +1,16 @@
+<main>
+	<a id="back" class="link btn" onclick="history.go(-1);" style="float:right;">返回</a>
+	<div id="statusCode"><%=page.error_code;%></div>
+	<div id="main">
+		<div id="title"><%=page.error_title;%></div>
+		<div id="info">
+			<%if (page.error_info) {%>
+				<%-page.error_info;%>
+			<%} else {%>
+				服务器无法正常提供信息。<br>
+				目标页面可能已经被更改、删除或移到其他位置，或您所输入页面地址错误。
+			<%}%>
+		</div>
+		<div class="clear"></div>
+	</div>
+</main>

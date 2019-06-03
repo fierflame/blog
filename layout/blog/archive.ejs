@@ -1,0 +1,29 @@
+<div class="only-print" data-page-card data-title="<%= config.title; %>" data-url="<%=config.url;%>"></div>
+<%
+var title = page.title ? page.title  + '|' : '';
+/**
+if (is_month()){
+	title = ': ' + page.year + '年' + page.month + '月';
+} else if (is_year()){
+	timeTitle = ': ' + page.year + '年';
+}
+**/
+title = page.category && page.category.title || '博客';
+/**
+if (is_month()){
+	title += ': ' + page.year + '年' + page.month + '月';
+} else if (is_year()){
+	title += ': ' + page.year + '年';
+}
+**/
+if (!title) {
+	title += '博客 @ 王晨旭的个人网站';
+}
+%>
+<h1 class="archive-title"><%=title;%></h1>
+<main class="archive-main">
+	<%for (let blog of page.blogs) {%>
+		<%- await include('archive_item.ejs', {blog}); %>
+	<%}%>
+</main>
+<div class="only-print" data-page-card data-title="<%= config.title; %>" data-url="<%=config.url;%>"></div>

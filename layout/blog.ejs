@@ -1,0 +1,5 @@
+<%if (page.archive) {%>
+	<%- await include('blog/archive.ejs'); %>
+<%} else {%>
+	<%- await include('blog/page.ejs'); %>
+<%}%>

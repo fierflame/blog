@@ -1,0 +1,24 @@
+<%
+let title;
+if (false){
+	title = page.category && page.category.title || '博客';
+	if (is_month()){
+		title += ': ' + page.year + '年' + page.month + '月';
+	} else if (is_year()){
+		title += ': ' + page.year + '年';
+	}
+	if (page.category && page.category.title) {
+		title += ' | 博客';
+	}
+	title += ' @ ' + config.title;
+} else if (page.is_error_page) {
+	title = page.error_code + ":" + page.error_title;
+} else {
+	title = page.title || '';
+	if (page.category && page.category.title) {
+		title += ' # ' + page.category.title;
+	}
+	if (title) { title += ' | '; }
+	title += '博客 @ ' + config.title;
+}
+%><title><%= title; %></title>

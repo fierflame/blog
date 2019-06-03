@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<%- await include('layout/head_title.ejs'); %>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#08F">
+	<%- css('style/style.css'); %>
+	<%- css('style/highlight/default.css'); %>
+	<%if (config.render && config.render.tex || page.render &&  page.render.tex) {%>
+		<%- css('style/katex.min.css'); %>
+		<%- js('script/katex.min.js'); %>
+	<%}%>
+	<%if (config.render && config.render.flowchart || page.render &&  page.render.flowchart) {%>
+		<%- js('script/raphael.min.js'); %>
+		<%- js('script/flowchart-latest.js'); %>
+	<%}%>
+	<%if (config.render && config.render.sequence || page.render &&  page.render.sequence) {%>
+		<%- js('script/webfont.js'); %>
+		<%- js('script/snap.svg-min.js'); %>
+		<%- js('script/underscore-min.js'); %>
+		<%- js('script/sequence-diagram-min.js'); %>
+	<%}%>
+	<%- js('script/highlight.pack.js'); %>
+	<%- js('script/qrcode.min.js'); %>
+	<%- js('script/script.js'); %>
+	<%if (page.is_error_page) {%><%- css('style/error_page.css'); %><%}%>
+
+</head>
+<body>
+	<%- await include('layout/header.ejs'); %>
+	<div><%- body ;%></div>
+	<%- await include('layout/footer.ejs'); %>
+</body>
+</html>
