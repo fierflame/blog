@@ -83,7 +83,7 @@ async function processor(file, {config}, { isTheme }) {
 	data.slug = info && info.title;
 	data.dirname = dirname;
 
-	if (/\/index\.md$/i.test(path)) {
+	if (/\/(?:index|README)\.md$/i.test(path)) {
 		data.blogs = [];
 		data.children = [];
 		data.path = blogPath + dirname;

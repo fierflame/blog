@@ -1,29 +1,15 @@
 <div class="only-print" data-page-card data-title="<%= config.title; %>" data-url="<%=config.url;%>"></div>
-<%
-var title = page.title ? page.title  + '|' : '';
-/**
-if (is_month()){
-	title = ': ' + page.year + '年' + page.month + '月';
-} else if (is_year()){
-	timeTitle = ': ' + page.year + '年';
-}
-**/
-title = page.category && page.category.title || '博客';
-/**
-if (is_month()){
-	title += ': ' + page.year + '年' + page.month + '月';
-} else if (is_year()){
-	title += ': ' + page.year + '年';
-}
-**/
-if (!title) {
-	title += '博客 @ 王晨旭的个人网站';
-}
-%>
-<h1 class="archive-title"><%=title;%></h1>
+<h1 class="archive-title"><%=page.category && page.category.title || '博客';%></h1>
 <main class="archive-main">
-	<%for (let blog of page.blogs) {%>
-		<%- await include('archive_item.ejs', {blog}); %>
-	<%}%>
+	<%for (let blog of page.blogs) {%><article class="archive-blog-main style-context-box">
+		<span class="archive-blog-time"><%=blog.date.format(config.date_format);%></span>
+		<h2>[ <% if (blog.category && blog.category.title) { %>
+			<a href="<%=url(blog.category.url || blog.category.path);%>"><%=blog.category.title;%></a>
+		<% } else { %>
+			未分类
+		<% } %>] <a href="<%=url(blog.url);%>"><%=blog.title;%></a>
+		</h2>
+		<p><%-blog.explain;%></p>
+	</article><%}%>
 </main>
 <div class="only-print" data-page-card data-title="<%= config.title; %>" data-url="<%=config.url;%>"></div>

@@ -10,6 +10,9 @@
 	<%-page.content;%>
 </article>
 <div class="style-context-box not-print" data-clipboard-tip="此文链接:" data-clipboard-data data-clipboard-type="url"></div>
+<% if (page.references && page.references.length) {
+	// TODO: references 参考文献
+}%>
 <div class="base-page-nav">
 	<%if (page.prev) {%>
 		<a href="<%=url(page.prev.url);%>" title="<%=page.prev.title;%>">上一篇：<%=page.prev.title;%></a>
