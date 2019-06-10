@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Babel 配置入门教程 # 开发工具 | 博客 @ 王晨旭的网站</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#08F">
+	<link rel="stylesheet" href="/style/style.css">
+	<link rel="stylesheet" href="/style/highlight/default.css">
+	
+	
+	
+	<script src="/script/highlight.pack.js"></script>
+	<script src="/script/qrcode.min.js"></script>
+	<script src="/script/script.js"></script>
+	
+
+</head>
+<body>
+	<header>
+	<div id="open-header" onclick="this.parentNode.classList.toggle('open')"></div>
+	<div id="header-bar">
+		<a href="/" id="site-logo">
+			<img src="/favicon.svg" />
+			王晨旭的网站
+		</a>
+	</div>
+	<nav>
+		<ul>
+			<li><a href="/">首页</a></li>
+		<li><a href="/HTML5API">HTML5 API</a></li><li><a href="/dovtools">开发工具</a></li><li><a href="/server">服务器</a></li>
+		</ul>
+
+		<ul><li><a target="_blank" href="http://tools.wangchenxu.net/">开发者工具</a></li></ul>
+	</nav>
+	<ul id="qrcode-links">
+		<li title="微信公众号: 未来开发者(wangchenxu-net)"><a target="_blank" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzU3NjMxNDgzMw==" class="wechat-logo"></a><img src="/images/qrcode/wangchenxu-net.svg"/></li>
+		<li title="码云: wangchenxu-net"><a target="_blank" href="https://gitee.com/wangchenxu-net" class="gitee-logo"></a></li>
+		<li title="gitlab: wangchenxu-net"><a target="_blank" href="https://gitlab.com/wangchenxu-net" class="gitlab-logo"></a></li>
+		<li title="github: wangchenxu-net"><a target="_blank" href="https://github.com/wangchenxu-net" class="github-logo"></a></li>
+		<li title="捐助我：支付宝"><div class="alipay-logo"></div><img src="/images/qrcode/alipay.png"/></li>
+		<li title="捐助我：微信支付"><div class="wepay-logo"></div><img src="/images/qrcode/wepay.png"/></li>
+		<li title="电子邮箱"><a target="_blank" href="mailto:www@wangchenxu.net" class="email-logo"></a></li>
+	</ul>
+</header>
+	<div>
+	<div class="only-print" data-page-card data-title="Babel 配置入门教程"></div>
+<main>
+<div class="blog-info">
+	<span class="blog-time"></span>
+	<h1 class="blog-title">
+		[<a href="/dovtools">开发工具</a>]
+	Babel 配置入门教程</h1>
+</div>
+<article class="blog-main style-context-box" need-article-nav>
+	<h2 id="什么是-babel">什么是 <code>Babel</code></h2>
+<p><code>Babel</code> 是一个 <code>ECMAScript</code> 编译器，可以将新一代的 ES 语法转为旧一代的 ES 语法，甚至是转换 ES 的超集语言（如 <code>jsx</code>, <code>typescript</code> 等）为 <code>ECMAScript</code> 代码。</p><p>截止发稿日期，<code>Babel</code> 的版本号为 <code>7.4.x</code>。在没有特殊说明的情况下，我将在此版本上进行介绍。</p><p>目前，所有的 <code>Babel</code> 7.x 版本的官方 <code>npm</code> 包都在 <code>@babel</code> 命名空间下。</p><h2 id="常用-babel-包及说明">常用 <code>Babel</code> 包及说明</h2>
+<ul>
+<li><p><code>@babel/core</code><br><code>Babel</code> 的核心组件，只要使用 <code>Babel</code> 就必须要安装此 <code>npm</code> 包。</p></li>
+<li><p><code>@babel/cli</code><br><code>Babel</code> 的终端命令，如果想在终端中调用 <code>babel</code> 命令，需要安装此 <code>npm</code> 包。</p></li>
+<li><p><code>@babel/node</code><br><code>Babel</code> 的交互式解释器，此包中带有 <code>babel-node</code> 命令，此命令可以像 <code>node</code> 一样使用，但在实际使用前会先进行代码转换。<br>但是，在 <code>babel-node</code> 中不支持 <code>let</code> 和 <code>const</code>。</p></li>
+<li><p><code>@babel/register</code><br>在<code>node</code>中直接采用新的语法书写执行时，用于注册<code>Require hook</code>的 <code>npm</code> 包。</p></li>
+<li><p><code>@babel/plugin-*</code><br><code>@babel/plugin-*</code> 为 <code>Babel</code> 的语法支持插件，主要包含下列三类：</p><ul>
+<li><code>@babel/plugin-transform-*</code></li>
+<li><code>@babel/plugin-proposal-*</code></li>
+<li><code>@babel/plugin-syntax-*</code></li>
+</ul>
+<p>三者的主要区别是:</p><ol>
+<li><code>@babel/plugin-syntax-*</code> 只提供给 <code>Babel</code> 的支持，但不提供转换，剩余两者都提供转换。</li>
+<li><code>@babel/plugin-transform-*</code> 是对 <code>ECMAScript</code> 中已定义的语法及超集语言的转换，而 <code>@babel/plugin-proposal-*</code> 是对草案中提到的语法进行转换，换句话说，<code>@babel/plugin-proposal-*</code> 转换的语法，不能保证以后规则不会变。</li>
+<li>但如果转换插件是在草案阶段实现的，且称为 <code>ECMAScript</code> 的标准语法后，实现没有改变，插件可能仍然保留 <code>@babel/plugin-proposal-*</code> 命名而不改变。</li>
+</ol>
+</li>
+<li><p><code>@babel/preset-*</code><br><code>Babel</code> 的预置配置，不通的配置一般包含有不同的插件，并进行了适当地设置。<br><code>Babel</code> 的预置配置使用最多的是<code>@babel/preset-env</code>，有较多的配置项，，常用选项按照 <code>选项名: 类型 = 默认值</code> 的格式给出：</p><ul>
+<li><code>targets</code>: <code>string | Array&lt;string&gt; | { [string]: string }</code> = <code>{}</code><br>描述您为项目支持/定位的环境, 如： <code>&quot;&gt; 0.25%, not dead&quot;</code>, <code>{ &quot;chrome&quot;: &quot;58&quot;, &quot;ie&quot;: &quot;11&quot; }</code>， 默认情况下将转换所有ECMAScript 2015+代码</li>
+<li><code>modules</code>: <code>&quot;amd&quot; | &quot;umd&quot; | &quot;systemjs&quot; | &quot;commonjs&quot; | &quot;cjs&quot; | &quot;auto&quot; | false</code> = <code>&quot;auto&quot;</code><br>启用将ES6模块语法转换为其他模块类型。 将此设置为false不会转换模块。 另请注意，这cjs只是一个别名commonjs。<br>其余选项可参考<a href="https://babeljs.io/docs/en/babel-preset-env#options"><code>@babel/preset-env</code> 的选项</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="使用-babel">使用 <code>Babel</code></h2>
+<h3 id="配置及配置文件">配置及配置文件</h3>
+<p>配置为一个 object 对象，其主要有以下两个属性：</p><ul>
+<li><code>plugins</code>: 插件列表，Array 类型。<br>每一项为一个插件，可以是以下几种格式<ul>
+<li><code>&#39;插件名称&#39;</code>，直接为插件的名称，如 <code>@babel/plugin-transform-react-jsx</code>, 如果插件名称以 <code>babel-plugin-</code> 开头，可以将其省略，如 <code>babel-plugin-my-plugin</code> 可以省略为<code>my-plugin</code></li>
+<li><code>[&#39;插件名称&#39;, { /* 选项 */ }]</code>，使用插件，并设置选项</li>
+<li><code>pluginObject</code>，使用插件对象，一般通过 <code>require</code> 导入的插件</li>
+<li><code>[pluginObject, { /* 选项 */ }]</code>，使用插件，并设置选项<br>插件会按照在列表中的顺序，被依次应用</li>
+</ul>
+</li>
+<li><code>presets</code>: 预设列表，Array 类型。<br>每一项为一个预设，可以是以下几种格式<ul>
+<li><code>&#39;预设名称&#39;</code>，直接为预设的名称，如 <code>@babel/preset-transform-react-jsx</code>, 如果预设名称以 <code>babel-preset-</code> 开头，可以将其省略，如 <code>babel-preset-my-preset</code> 可以省略为<code>my-preset</code></li>
+<li><code>[&#39;预设名称&#39;, { /* 选项 */ }]</code>，使用预设，并设置选项</li>
+<li><code>presetObject</code>，使用预设对象，一般通过 <code>require</code> 导入的预设</li>
+<li><code>[presetObject, { /* 选项 */ }]</code>，使用预设，并设置选项<br>预设会按照在列表中的<strong>反向</strong>顺序，被依次应用。<br>预设会在插件之后引用。</li>
+</ul>
+</li>
+</ul>
+<p>根据使用的场景不同，可能需要将配置单独写入到配置文件中</p><p><code>Babel</code> 目前支持两种配置文件：</p><ul>
+<li><code>.babelrc</code> 其本质为 JSON5 文件，其内容作为配置</li>
+<li><code>babel.config.js</code> 其本质为 nodejs 的 commonjs 模块文件，其导出作为配置</li>
+</ul>
+<p>附 babel 配置举例</p><pre><code class="JavaScript">module.exports = {
+    plugins: [
+        &#39;@babel/plugin-proposal-async-generators&#39;,
+        &#39;@babel/plugin-proposal-async-to-generator&#39;,
+        &#39;@babel/plugin-proposal-class-properties&#39;,
+        &#39;@babel/plugin-proposal-do-expressions&#39;,
+        &#39;@babel/plugin-proposal-function-bind&#39;,
+        &#39;@babel/plugin-proposal-logical-assignment-operators&#39;,
+        &#39;@babel/plugin-proposal-numeric-separator&#39;,
+        &#39;@babel/plugin-proposal-object-rest-spread&#39;,
+        &#39;@babel/plugin-proposal-optional-catch-binding&#39;,
+        &#39;@babel/plugin-proposal-optional-chaining&#39;,
+        &#39;@babel/plugin-proposal-private-methods&#39;,
+        &#39;@babel/plugin-proposal-throw-expressions&#39;,
+        [&#39;@babel/plugin-transform-typescript&#39;, {isTSX: true, jsxPragma: &#39;createElement&#39;}],
+        [&#39;@babel/plugin-transform-react-jsx&#39;, {pragma: &#39;createElement&#39;, throwIfNamespace: false}],
+    ]
+};</code></pre>
+<h3 id="在终端中进行编译">在终端中进行编译</h3>
+<p>需要配置好配置文件，并安装以下两个必须的 <code>npm</code> 包及其他用到的插件及预置等：</p><ul>
+<li><code>@babel/core</code>  </li>
+<li><code>@babel/cli</code>  </li>
+</ul>
+<p>之后可以使用 <code>babel</code> 命令进行编译，我一般会在 package.json 中配置命令，如下：<br><code>babel src --out-dir lib -x .ts,.tsx -s</code><br>其中:</p><ul>
+<li><code>src</code> 为要编译的文件(或要编译文件所在的目录)</li>
+<li><code>--out-dir lib</code> 为设置编译结果的输出目录，其中 lib 为输出目录。如果是编译一个文件怎用 <code>--out outFile</code> outFile 为输出文件</li>
+<li><code>-x .ts,.tsx</code> 设置要编译的文件后缀，默认情况下只编译 <code>.es6</code>,<code>.js</code>,<code>.es</code>,<code>.jsx</code>,<code>.mjs</code> 五种后缀的文件，这里我还希望编译 <code>.ts</code>,<code>.tsx</code>,所以我还使用了此选项</li>
+<li><code>-s</code> 选项表示生成独立的 <code>.map</code> 文件，便于后期调试</li>
+</ul>
+<h3 id="在终端中采用交互式执行">在终端中采用交互式执行</h3>
+<p>需要配置好配置文件，并安装以下两个必须的 <code>npm</code> 包及其他用到的插件及预置等：</p><ul>
+<li><code>@babel/core</code>  </li>
+<li><code>@babel/node</code>  </li>
+</ul>
+<p>之后可以使用 <code>babel-node</code> 命令交互式执行，如果需要支持 <code>.es6</code>,<code>.js</code>,<code>.es</code>,<code>.jsx</code>,<code>.mjs</code> 五种后缀以为的文件通过 require 导入，需要使用 <code>-x</code> 选项，使用方式同 <code>babel</code> 命令</p><h3 id="在-node-上下文中使用">在 node 上下文中使用</h3>
+<p>需要配置好配置文件，并安装以下两个必须的 <code>npm</code> 包及其他用到的插件及预置等：</p><ul>
+<li><code>@babel/core</code>  </li>
+<li><code>@babel/register</code>  </li>
+</ul>
+<p>之后在 node 的入口文件第一行前插入 <code>require(&#39;@babel/register&#39;);</code> 如果是采用 ES6 的 <code>import</code>， 则是 <code>import &#39;@babel/register&#39;;</code></p><h3 id="在-node-中调用-babel-进行转换">在 node 中调用 babel 进行转换</h3>
+<p>只需要安装 <code>@babel/core</code>，之后按照如下格式执行即可：<br><code>require(&#39;babel-core&#39;).transform(&#39;code&#39;, options);</code><br>其中：</p><ul>
+<li><code>&#39;code&#39;</code> 是要转换的代码</li>
+<li><code>options</code> 是要 babel 的配置</li>
+</ul>
+<h2 id="常用-babel-语法转换插件">常用 <code>Babel</code> 语法转换插件</h2>
+<p>以下按照 <code>ES6+</code> 的常用特性及变成语言罗列，后面附相关插件，其中若未附带<code>@babel/plugin-syntax-*</code>且未特别说明则表示 <code>Babel</code> 默认支持此类语法的解析，部分后面附有常用选项，常用选项按照 <code>选项名: 类型 = 默认值</code> 的格式给出。</p><ul>
+<li>其他语言<br>这一组插件，主要是将其他扩展于 <code>ECMAScript</code> 的语言转换成 <code>ECMAScript</code>。<ul>
+<li><code>jsx</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-jsx"><code>@babel/plugin-syntax-jsx</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-react-jsx"><code>@babel/plugin-transform-react-jsx</code></a><br>常用选项：<ul>
+<li><code>pragma</code>: <code>string</code> = <code>&quot;React.createElement&quot;</code> 编译 <code>JSX</code> 表达式时使用的渲染函数</li>
+<li><code>pragmaFrag</code>: <code>string</code> = <code>&quot;React.Fragment&quot;</code> 替换编译JSX片段时使用的组件</li>
+<li><code>useBuiltIns</code>: <code>boolean</code> = <code>false</code> 展开属性时，使用<code>Object.assign</code>，而不是使用 <code>Babel</code> 提供的函数</li>
+<li><code>throwIfNamespace</code>: <code>boolean</code> = <code>true</code> 使用<code>XML</code>命名空间标记名称时，是否抛出错误</li>
+</ul>
+</li>
+<li><code>typescript</code><br>Babel 只会移除 Typescript 中的类型和未使用的引入的包，所以不会加载 <code>tsconfig.json</code> 不支持 <code>namespace</code>、<code>const enum</code>、<code>export =</code>、<code>import =</code> 等，且不能生成 <code>.d.ts</code> 文件<br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-typescript"><code>@babel/plugin-syntax-typescript</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-typescript"><code>@babel/plugin-transform-typescript</code></a><br>常用选项：<ul>
+<li><code>isTSX</code>: <code>boolean</code> = <code>false</code> 是否为 <code>TSX</code>，如果采用 <code>TSX</code> 则不支持<code>&lt;type&gt;variable</code> 形式的断言。如果未采用 <code>TSX</code> 则不能与 <code>TSX</code> 相关的插件共同使用</li>
+<li><code>jsxPragma</code>: <code>string</code> = <code>&quot;React&quot;</code> 编译 <code>TSX</code> 表达式时使用的渲染函数所属的变量。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Module 转换<br>这一组插件，主要用于将 <code>ECMAScript</code> 模块转换为其他类型的模块。<ul>
+<li><code>amd</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-modules-amd">@babel/plugin-transform-modules-amd</a></li>
+<li><code>commonjs</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-modules-commonjs">@babel/plugin-transform-modules-commonjs</a></li>
+<li><code>systemjs</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-modules-systemjs">@babel/plugin-transform-modules-systemjs</a></li>
+<li><code>umd</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-modules-umd">@babel/plugin-transform-modules-umd</a></li>
+</ul>
+</li>
+<li>语法糖<br>这一组插件针对的特性，一般被称为语法糖，除非转换后的语法需要版本要求，一般可以放心使用。<ul>
+<li><code>ES2015</code> 箭头函数 <code>p =&gt; r</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-arrow-functions"><code>@babel/plugin-transform-arrow-functions</code></a>  </li>
+<li><code>ES2015</code> 块级作用域与 <code>let</code> / <code>const</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-block-scoping"><code>@babel/plugin-transform-block-scoping</code></a><br>常用选项  <ul>
+<li><code>throwIfClosureRequired</code>: <code>boolean</code> = <code>false</code> 碰到无法转换的情况时抛出错误</li>
+</ul>
+</li>
+<li><code>ES2015</code> 类 <code>class C{ /* ... */ }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-classes"><code>@babel/plugin-transform-classes</code></a>  </li>
+<li><code>ES2015</code> 解构 <code>var [, b, c, d , ...other] = array</code>, <code>var {a , b: c } = obj</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-destructuring"><code>@babel/plugin-transform-destructuring</code></a><br>常用选项：<ul>
+<li><code>useBuiltIns</code>: <code>boolean</code> = <code>false</code> 展开属性时，使用<code>Object.assign</code>，而不是使用 <code>Babel</code> 提供的函数</li>
+</ul>
+</li>
+<li><code>ES2015</code> 参数解构 <code>function({a, b: c}, [d, e, ...f],  ...g) { /* ... */ }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-parameters"><code>@babel/plugin-transform-parameters</code></a>  </li>
+<li><code>ES2015</code> 展开运算 <code>var a = [b, c, ...d, e]</code>, <code>f(b, c, ...d, e)</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-spread"><code>@babel/plugin-transform-spread</code></a><br>常用选项：<ul>
+<li><code>loose</code>: <code>boolean</code> = <code>false</code> 是否将所有要类似数组展开的变量均按照普通数组方式展开</li>
+</ul>
+</li>
+<li><code>ES2015</code> 简写属性 <code>var a = { b, c, d}</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-shorthand-properties"><code>@babel/plugin-transform-shorthand-properties</code></a>  </li>
+<li><code>ES2015</code> 计算属性 <code>var a = {[x + y] : z}</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-computed-properties"><code>@babel/plugin-transform-computed-properties</code></a>  </li>
+<li><code>ES2015</code> 模板字符串 <code>`${a}+${b}=${a+b}`</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-template-literals"><code>@babel/plugin-transform-template-literals</code></a>  </li>
+<li><code>ES2015</code> 字面量 <code>0o23</code>, <code>0b101</code>, <code>0b101</code>, <code>&#39;Hello\u{000A}\u{0009}!&#39;</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-literals"><code>@babel/plugin-transform-literals</code></a>  </li>
+<li><code>ES2015</code> 生成器函数 <code>function *f() { /* ... */ }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-regenerator"><code>@babel/plugin-transform-regenerator</code></a>  </li>
+<li><code>ES2016</code> 幂运算符 <code>a ** b</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-exponentiation-operator"><code>@babel/plugin-syntax-exponentiation-operator</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-exponentiation-operator"><code>@babel/plugin-transform-exponentiation-operator</code></a>  </li>
+<li><code>ES2017</code> 异步函数 <code>async function f() { /* ... */ }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-async-functions"><code>@babel/plugin-syntax-async-functions</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-async-to-generator"><code>@babel/plugin-transform-async-to-generator</code></a>  </li>
+<li><code>ES2018</code> 异步生成器函数 <code>async function* f() { /* ... */ }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-async-generators"><code>@babel/plugin-syntax-async-generators</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-async-generator-functions"><code>@babel/plugin-proposal-async-generator-functions</code></a>  </li>
+<li><code>ES2018</code> 可选 catch 绑定 <code>try { /* ... */ } catch { /* ... */ }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-optional-catch-binding"><code>@babel/plugin-syntax-optional-catch-binding</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-optional-catch-binding"><code>@babel/plugin-proposal-optional-catch-binding</code></a>  </li>
+<li><code>ES2018</code> 对象解析赋值 <code>var { x, y, ...z } = obj</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-object-rest-spread"><code>@babel/plugin-syntax-object-rest-spread</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-object-rest-spread"><code>@babel/plugin-proposal-object-rest-spread</code></a><br>常用选项：<ul>
+<li><code>useBuiltIns</code>: <code>boolean</code> = <code>false</code> 展开属性时，使用 <code>Object.assign</code>，而不是使用 <code>Babel</code> 提供的函数</li>
+</ul>
+</li>
+<li><code>草案</code> 类属性 <code>class { prop = &#39;value&#39;; }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-class-properties"><code>@babel/plugin-syntax-class-properties</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-class-properties"><code>@babel/plugin-proposal-class-properties</code></a>  </li>
+<li><code>草案</code> do 表达式 <code>do {/* ... */ }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-do-expressions"><code>@babel/plugin-syntax-do-expressions</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-do-expressions"><code>@babel/plugin-proposal-do-expressions</code></a>  </li>
+<li><code>草案</code> export default from <code>export name from &#39;mod&#39;</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-export-default-from"><code>@babel/plugin-syntax-export-default-from</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-export-default-from"><code>@babel/plugin-proposal-export-default-from</code></a>  </li>
+<li><code>草案</code> export namespace from <code>export * as name from &#39;mod&#39;</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-export-namespace-from"><code>@babel/plugin-syntax-export-namespace-from</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-export-namespace-from"><code>@babel/plugin-proposal-export-namespace-from</code></a>  </li>
+<li><code>草案</code> 绑定运算符 <code>obj::func</code>, <code>obj::func()</code>, <code>::obj.func</code>, <code>::obj.func()</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-function-bind"><code>@babel/plugin-syntax-function-bind</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-function-bind"><code>@babel/plugin-proposal-function-bind</code></a>  </li>
+<li><code>草案</code> 逻辑赋值运算符 <code>a ||= b</code>, <code>a &amp;&amp;= b</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-logical-assignment-operators"><code>@babel/plugin-syntax-logical-assignment-operators</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-logical-assignment-operators"><code>@babel/plugin-proposal-logical-assignment-operators</code></a>  </li>
+<li><code>草案</code> 空结合运算符 <code>a ?? b</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-nullish-coalescing-operator"><code>@babel/plugin-syntax-nullish-coalescing-operator</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator"><code>@babel/plugin-proposal-nullish-coalescing-operator</code></a>  </li>
+<li><code>草案</code> 数字分隔符 <code>12_3456_7890</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-numeric-separator"><code>@babel/plugin-syntax-numeric-separator</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-numeric-separator"><code>@babel/plugin-proposal-numeric-separator</code></a>  </li>
+<li><code>草案</code> 数字分隔符 <code>12_3456_7890</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-numeric-separator"><code>@babel/plugin-syntax-numeric-separator</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-numeric-separator"><code>@babel/plugin-proposal-numeric-separator</code></a>  </li>
+<li><code>草案</code> 可选链运算符 <code>a?.b</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-optional-chaining"><code>@babel/plugin-syntax-optional-chaining</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining"><code>@babel/plugin-proposal-optional-chaining</code></a>  </li>
+<li><code>草案</code> 局部应用 <code>f(?, p1, p2)</code>, <code>f(p0, ?, p2)</code>, <code>f(p0, p1, ?)</code>, <code>?.f(p0, p1, p2)</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-partial-application"><code>@babel/plugin-syntax-partial-application</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-partial-application"><code>@babel/plugin-proposal-partial-application</code></a>  </li>
+<li><code>草案</code> 管道运算符 <code>a |&gt; f</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-pipeline-operator"><code>@babel/plugin-syntax-pipeline-operator</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator"><code>@babel/plugin-proposal-pipeline-operator</code></a>  </li>
+<li><code>草案</code> 类的私有方法 <code>class C{ #method() { /* ... */ }}</code><br>类的私有方法暂时单纯的私有方法<br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-private-methods"><code>@babel/plugin-proposal-private-methods</code></a>  </li>
+<li><code>草案</code> throw 表达式 <code>throw error</code><br><a href="https://babeljs.io/docs/en/babel-plugin-syntax-throw-expressions"><code>@babel/plugin-syntax-throw-expressions</code></a><br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-throw-expressions"><code>@babel/plugin-proposal-throw-expressions</code></a>  </li>
+</ul>
+</li>
+<li>底层实现<br>这一组插件，转换后可以运行在低版本平台上，但可能会丧失部分功能，如正则表达式的修饰符。<ul>
+<li><code>ES2015</code> for-of 循环 <code>for (var val of variable) { /* ... */ }</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-for-of"><code>@babel/plugin-transform-for-of</code></a><br>常用选项：<ul>
+<li><code>assumeArray</code>: <code>boolean</code> = <code>false</code> 是否假定所有被循环对象均为数组</li>
+</ul>
+</li>
+<li><code>ES2015</code> typeof symbol <code>typeof variable === &#39;symbol&#39;</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-typeof-symbol"><code>@babel/plugin-transform-typeof-symbol</code></a>  </li>
+<li><code>ES2015</code> 正则表达式 Unicode 模式修饰符 <code>u</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-unicode-regex"><code>@babel/plugin-transform-unicode-regex</code></a>  </li>
+<li><code>ES2018</code> 正则表达式 dotAll 模式修饰符 <code>s</code><br><a href="https://babeljs.io/docs/en/babel-plugin-transform-dotall-regex"><code>@babel/plugin-transform-dotall-regex</code></a>  </li>
+<li><code>ES2018</code> 正则表达式命名捕获组<br><a href="https://babeljs.io/docs/en/babel-plugin-transform-named-capturing-groups-regex"><code>@babel/plugin-transform-named-capturing-groups-regex</code></a>  </li>
+<li><code>ES2018</code> 正则表达式 Unicode 特性项<br><a href="https://babeljs.io/docs/en/babel-plugin-proposal-unicode-property-regex"><code>@babel/plugin-proposal-unicode-property-regex</code></a><br>常用属性：<ul>
+<li><code>runtime</code>: <code>boolean</code> = <code>true</code> 开启此选项时，将需要最低的 <code>ES2015</code> 的正则表达式支持；禁用此选项时，需要导入适当的 <code>polyfill</code>，但输出不仅支持捕获组命名。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</article>
+<div class="style-context-box not-print" data-clipboard-tip="此文链接:" data-clipboard-data data-clipboard-type="url"></div>
+
+<div class="base-page-nav">
+	
+		<div>已经是第一篇</div>
+	
+	
+		<a href="/HTML5API/2019-05-19-pwa.html" title="PWA: 渐进式 Web 应用">下一篇：PWA: 渐进式 Web 应用</a>
+	
+</div>
+<div class="only-print" data-page-card data-title="Babel 配置入门教程"></div>
+<div class="not-print" id="cyReward" role="cylabs" data-use="reward"></div>
+<div class="not-print" id="cyEmoji" role="cylabs" data-use="emoji"></div>
+<div class="not-print" id="SOHUCS"></div>
+</main>
+<div class="not-print" id="more-list"></div>
+
+</div>
+	<footer>
+	<div>
+		&copy;2018-2019
+		<a href="//www.wangchenxu.net">王晨旭的网站</a>
+		<script src="//s19.cnzz.com/stat.php?id=1274150741&show=pic"></script>
+	</div>
+</footer>
+</body>
+</html>
