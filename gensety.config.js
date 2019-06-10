@@ -37,6 +37,7 @@ Date.prototype.format = function (format = 'YYYY-MM-DD') {
 
 
 const navlist = [
+	{ title: '提问', url: 'https://gitee.com/wangchenxu-net/blog/issues' },
 	{ title: '开发者工具', url: 'http://tools.wangchenxu.net/' },
 	// { title: 'git', url: 'http://git.wangchenxu.net/' },
 	// { title: '算法', url: 'http://algorithm.wangchenxu.net/' },
