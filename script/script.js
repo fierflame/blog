@@ -347,7 +347,7 @@ window.addEventListener("load", function(){
 
 window.addEventListener("load", function(){
 	var search = initSearch({
-		"搜狗": "https://www.sogou.com/web?query=site%3Awangchenxu.net+%s",
+		"搜狗": "https://www.sogou.com/web?query=site%3Afierflame.com+%s",
 	});
 	var inited = false;
 	var searchArea = document.querySelectorAll(".search-area");

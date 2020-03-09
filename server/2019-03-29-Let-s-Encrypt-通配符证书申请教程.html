@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Let&#39;s Encrypt 通配符证书申请教程 # 服务器 | 博客 @ 王晨旭的网站</title>
+	<title>Let&#39;s Encrypt 通配符证书申请教程 # 服务器 | 博客 @ Fierflame.com</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="theme-color" content="#08F">
 	<link rel="stylesheet" href="/style/style.css">
@@ -22,7 +22,7 @@
 	<div id="header-bar">
 		<a href="/" id="site-logo">
 			<img src="/favicon.svg" />
-			王晨旭的网站
+			Fierflame.com
 		</a>
 	</div>
 	<nav>
@@ -31,7 +31,7 @@
 		<li><a href="/HTML5API">HTML5 API</a></li><li><a href="/dovtools">开发工具</a></li><li><a href="/server">服务器</a></li>
 		</ul>
 
-		<ul><li><a target="_blank" href="https://gitee.com/wangchenxu-net/blog/issues">提问</a></li><li><a target="_blank" href="http://tools.wangchenxu.net/">开发者工具</a></li></ul>
+		<ul><li><a target="_blank" href="https://gitee.com/wangchenxu-net/blog/issues">提问</a></li><li><a target="_blank" href="http://tool.fierflame.com/">开发者工具</a></li></ul>
 	</nav>
 	<ul id="qrcode-links">
 		<li title="微信公众号: 未来开发者(wangchenxu-net)"><a target="_blank" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzU3NjMxNDgzMw==" class="wechat-logo"></a><img src="/images/qrcode/wangchenxu-net.svg"/></li>
@@ -40,9 +40,10 @@
 		<li title="github: wangchenxu-net"><a target="_blank" href="https://github.com/wangchenxu-net" class="github-logo"></a></li>
 		<li title="捐助我：支付宝"><div class="alipay-logo"></div><img src="/images/qrcode/alipay.png"/></li>
 		<li title="捐助我：微信支付"><div class="wepay-logo"></div><img src="/images/qrcode/wepay.png"/></li>
-		<li title="电子邮箱"><a target="_blank" href="mailto:www@wangchenxu.net" class="email-logo"></a></li>
+		<li title="电子邮箱"><a target="_blank" href="mailto:www@fierflame.com" class="email-logo"></a></li>
 	</ul>
 </header>
+
 	<div>
 	<div class="only-print" data-page-card data-title="Let&#39;s Encrypt 通配符证书申请教程"></div>
 <main>
@@ -60,15 +61,15 @@
 </ul>
 <p>Let’s Encrypt 是非盈利性的组织，设计了一个 ACME 协议，通过 ACME 协议使得证书申请、证书更新、证书撤销等过程可以完全由程序自动完成。目前 ACME 协议有两个版本 v1 和 v2。其中支持通配符证书的只有 v2 版本。</p><h2 id="通配符证书">通配符证书</h2>
 <p>从可以支持的域名的角度分类，证书可以分为以下三类：</p><ul>
-<li><code>单域名证书</code> - 支持对一个域名的保护，如<code>wangchenxu.net</code>、<code>demo.wangchenxu.net</code>等，但是不支持对其子域名的保护，如<code>wangchenxu.net</code>的整数，不支持对域名<code>demo.wangchenxu.net</code>保护</li>
+<li><code>单域名证书</code> - 支持对一个域名的保护，如<code>fierflame.com</code>、<code>demo.fierflame.com</code>等，但是不支持对其子域名的保护，如<code>fierflame.com</code>的整数，不支持对域名<code>demo.fierflame.com</code>保护</li>
 <li><code>泛域名证书</code> - 支持对多个域名保护，同一个证书所保护的各个域名之间可以没有任何关联，另外，不同 CA 机构提供的<code>泛域名证书</code>可以容纳的域名数量不通。其他规则同<code>单域名证书</code></li>
-<li><code>通配符证书</code> - 支持对一个带通配符域名（该*号同级别的全部明细域名）保护，申请证书时，如申请<code>*.wangchenxu.net</code>,那么该证书支持<code>a.wangchenxu.net</code>, <code>a1.wangchenxu.net</code>, <code>a2.wangchenxu.net</code>…以此类推，但是不支持<code>b.a.wangchenxu.net</code>, <code>b1.a.wangchenxu.net</code>…以此类推。如需支持，需另外再申请一张<code>*.a.wangchenxu.net</code>证书，部分 CA 机构提供的<code>通配符证书</code>还支持同时保护多个普通域名，如 <code>Let&#39;s Encrypt ACME v2</code> 证书</li>
+<li><code>通配符证书</code> - 支持对一个带通配符域名（该*号同级别的全部明细域名）保护，申请证书时，如申请<code>*.fierflame.com</code>,那么该证书支持<code>a.fierflame.com</code>, <code>a1.fierflame.com</code>, <code>a2.fierflame.com</code>…以此类推，但是不支持<code>b.a.fierflame.com</code>, <code>b1.a.fierflame.com</code>…以此类推。如需支持，需另外再申请一张<code>*.a.fierflame.com</code>证书，部分 CA 机构提供的<code>通配符证书</code>还支持同时保护多个普通域名，如 <code>Let&#39;s Encrypt ACME v2</code> 证书</li>
 </ul>
 <h2 id="安装-certbot-auto">安装 certbot-auto</h2>
 <p><code>certbot-auto</code> 本身只是一个 shell 脚本，通过此脚本，我们可以实现证书的申请等操作。关于 certbot-auto 的介绍，可以查看 <a href="https://certbot.eff.org/">https://certbot.eff.org/</a>  </p><p>通过以下命令，可以下载<code>certbot-auto</code>脚本并为其添加执行权限：</p><pre><code class="shell">wget https://dl.eff.org/certbot-auto
 chmod a+x certbot-auto</code></pre>
 <p>下载完成后，可以将其移动到<code>/usr/bin</code>、<code>/usr/local/bin</code>等环境路径下使用，也可以直接使用。此教程按照将其移动到环境路径下编写。如果您不移动，记得在命令前加入<code>.\</code>才能使用。</p><p>第一次使用 <code>certbot-auto</code> 时，其会调用系统安装工具(如<code>yum</code>、<code>apt</code>)安装一些必要的工具，安装过程中会有相应指令的交互操作，请配合安装。在必要工具安装完成后(或长时间未用，有更新的情况下)，<code>certbot-auto</code>会下载用到的最新的模块已进行证书申请。两次下载安装，会因为用户所用网络、安装包大小等原因，需要的时间不同。</p><h2 id="certbot-auto-教程">certbot-auto 教程</h2>
-<p><code>certbot-auto</code>命令示例：</p><pre><code>certbot-auto certonly -d wangchenxu.net -d *.wangchenxu.net --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory </code></pre><p>参数说明</p><ul>
+<p><code>certbot-auto</code>命令示例：</p><pre><code>certbot-auto certonly -d fierflame.com -d *.fierflame.com --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory </code></pre><p>参数说明</p><ul>
 <li><code>certonly</code> 表示安装模式，Certbot 有安装模式和验证模式两种类型的插件。</li>
 <li><code>-d 域名</code> 要使用此证书的域名，可以多个，但通配符域名最多一个</li>
 <li><code>--manual</code> 表示手动安装插件，Certbot 有很多插件，不同的插件都可以申请证书，用户可以根据需要自行选择</li>
@@ -83,7 +84,7 @@ chmod a+x certbot-auto</code></pre>
 <pre><code class="shell">Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator manual, Installer None
 Enter email address (used for urgent renewal and security notices) (Enter &#39;c&#39; to
-cancel): www@wangchenxu.net   # &lt;---- 这个不一定有，如果有，则输入邮箱，然后回车
+cancel): www@fierflame.com   # &lt;---- 这个不一定有，如果有，则输入邮箱，然后回车
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please read the Terms of Service at
@@ -105,8 +106,8 @@ encrypting the web, EFF news, campaigns, and ways to support digital freedom.
 Plugins selected: Authenticator manual, Installer None
 Obtaining a new certificate
 Performing the following challenges:
-dns-01 challenge for wangchenxu.net
-dns-01 challenge for wangchenxu.net   # &lt;------ 这里显示的是认证的域名
+dns-01 challenge for fierflame.com
+dns-01 challenge for fierflame.com   # &lt;------ 这里显示的是认证的域名
 # &lt;!----- 如果设置了多个域名，会显示多条，特别的，对于通配符域名会显示父域名  ----------&gt;
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -123,7 +124,7 @@ Are you OK with your IP being logged?
 # &lt;!----- 设置的 TXT 记录在全部被验证后才可以删除，当然你也可以不删除              ----------&gt;
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please deploy a DNS TXT record under the name
-_acme-challenge.wangchenxu.net with the following value:     # &lt;------ 需要设置 TXT 记录的命名
+_acme-challenge.fierflame.com with the following value:     # &lt;------ 需要设置 TXT 记录的命名
 
 bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA              # &lt;------ TXT 记录值
 # 特别说明，对于同一个域名可以添加多个相同优先级的 TXT 记录
@@ -138,11 +139,11 @@ Cleaning up challenges
 
 IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at:
-   /etc/letsencrypt/live/wangchenxu.net/fullchain.pem              # &lt;---- 证书生成的位置
+   /etc/letsencrypt/live/fierflame.com/fullchain.pem              # &lt;---- 证书生成的位置
    Your key file has been saved at:
-   /etc/letsencrypt/live/wangchenxu.net/privkey.pem              # &lt;---- 密钥生成的位置
+   /etc/letsencrypt/live/fierflame.com/privkey.pem              # &lt;---- 密钥生成的位置
 # &lt;------ 实际上除了生产以上两个文件外，还会生成其他的几个文件，但所给的文件的所属目录一定相同 -------&gt;
-# &lt;------ 在这里的目录为`/etc/letsencrypt/live/wangchenxu.net`，后面介绍将用到此目录路径 -------&gt;
+# &lt;------ 在这里的目录为`/etc/letsencrypt/live/fierflame.com`，后面介绍将用到此目录路径 -------&gt;
    Your cert will expire on 2019-06-27. To obtain a new or tweaked   # &lt;---- 有效期截止日期
    version of this certificate in the future, simply run certbot-auto
    again. To non-interactively renew *all* of your certificates, run
@@ -158,7 +159,7 @@ IMPORTANT NOTES:
 <li><code>域名</code> - 为要查询的域名，可以多个</li>
 <li><code>@DNS</code> - 表示采用的服务，可选，采用<code>@8.8.8.8</code>可以避免缓存问题</li>
 </ul>
-<p>例如执行<code>dig -t txt _acme-challenge.wangchenxu.net @8.8.8.8</code>得到的结果是：</p><pre><code>; &lt;&lt;&gt;&gt; DiG 9.11.3-1ubuntu1.5-Ubuntu &lt;&lt;&gt;&gt; -t txt _acme-challenge.wangchenxu.net @8.8.8.8
+<p>例如执行<code>dig -t txt _acme-challenge.fierflame.com @8.8.8.8</code>得到的结果是：</p><pre><code>; &lt;&lt;&gt;&gt; DiG 9.11.3-1ubuntu1.5-Ubuntu &lt;&lt;&gt;&gt; -t txt _acme-challenge.fierflame.com @8.8.8.8
 ;; global options: +cmd
 ;; Got answer:
 ;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 5608
@@ -167,18 +168,18 @@ IMPORTANT NOTES:
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 512
 ;; QUESTION SECTION:
-;_acme-challenge.wangchenxu.net.    IN    TXT
+;_acme-challenge.fierflame.com.    IN    TXT
 
 ;; ANSWER SECTION:
-_acme-challenge.wangchenxu.net.    599 IN    TXT    &quot;bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA&quot;
-_acme-challenge.wangchenxu.net.    599 IN    TXT    &quot;a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2hmPszNYw&quot;
+_acme-challenge.fierflame.com.    599 IN    TXT    &quot;bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA&quot;
+_acme-challenge.fierflame.com.    599 IN    TXT    &quot;a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2hmPszNYw&quot;
 
 ;; Query time: 95 msec
 ;; SERVER: 8.8.8.8#53(8.8.8.8)
 ;; WHEN: Fri Mar 29 10:14:19 CST 2019
-;; MSG SIZE  rcvd: 171</code></pre><p>我们将以<code>;</code>开头的部分和空行过滤掉，得到：</p><pre><code>_acme-challenge.wangchenxu.net.    238 IN    TXT    &quot;bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA&quot;
-_acme-challenge.wangchenxu.net.    238 IN    TXT    &quot;a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2hmPszNYw&quot;</code></pre><p>其中<code>_acme-challenge.wangchenxu.net.</code>及为我们查询的域名，最后引号内的为设置的TXT记录，如果其记录复合，则表示设置成功</p><h2 id="证书的说明">证书的说明</h2>
-<p>上面示例中的目录路径为<code>/etc/letsencrypt/live/wangchenxu.net</code><br>但是此目录中所包含的文件不只是以上几个文件，在此目录下执行<code>ls</code>我们可以看到，有以下几个文件：</p><ul>
+;; MSG SIZE  rcvd: 171</code></pre><p>我们将以<code>;</code>开头的部分和空行过滤掉，得到：</p><pre><code>_acme-challenge.fierflame.com.    238 IN    TXT    &quot;bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA&quot;
+_acme-challenge.fierflame.com.    238 IN    TXT    &quot;a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2hmPszNYw&quot;</code></pre><p>其中<code>_acme-challenge.fierflame.com.</code>及为我们查询的域名，最后引号内的为设置的TXT记录，如果其记录复合，则表示设置成功</p><h2 id="证书的说明">证书的说明</h2>
+<p>上面示例中的目录路径为<code>/etc/letsencrypt/live/fierflame.com</code><br>但是此目录中所包含的文件不只是以上几个文件，在此目录下执行<code>ls</code>我们可以看到，有以下几个文件：</p><ul>
 <li><code>privkey.pem</code> - 证书的私钥</li>
 <li><code>fullchain.pem</code> - 大多数服务器软件中使用的证书文件</li>
 <li><code>chain.pem</code> - 证书的公钥</li>
@@ -207,10 +208,12 @@ _acme-challenge.wangchenxu.net.    238 IN    TXT    &quot;a0vjK4_laS7vnGJNEglqzp
 </div>
 	<footer>
 	<div>
-		&copy;2018-2019
-		<a href="//www.wangchenxu.net">王晨旭的网站</a>
+		<!-- <a href="http://www.beian.miit.gov.cn" target="_blank">鲁ICP备16012041号</a> -->
+		&copy;2018-2020
+		<a href="//www.fierflame.com">Fierflame</a>
 		<script src="//s19.cnzz.com/stat.php?id=1274150741&show=pic"></script>
 	</div>
 </footer>
+
 </body>
 </html>
