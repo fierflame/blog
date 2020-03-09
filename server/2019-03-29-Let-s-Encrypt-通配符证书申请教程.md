@@ -22,9 +22,9 @@ Let's Encrypt 是非盈利性的组织，设计了一个 ACME 协议，通过 AC
 ## 通配符证书
 
 从可以支持的域名的角度分类，证书可以分为以下三类：
-* `单域名证书` - 支持对一个域名的保护，如`wangchenxu.net`、`demo.wangchenxu.net`等，但是不支持对其子域名的保护，如`wangchenxu.net`的整数，不支持对域名`demo.wangchenxu.net`保护
+* `单域名证书` - 支持对一个域名的保护，如`fierflame.com`、`demo.fierflame.com`等，但是不支持对其子域名的保护，如`fierflame.com`的整数，不支持对域名`demo.fierflame.com`保护
 * `泛域名证书` - 支持对多个域名保护，同一个证书所保护的各个域名之间可以没有任何关联，另外，不同 CA 机构提供的`泛域名证书`可以容纳的域名数量不通。其他规则同`单域名证书`
-* `通配符证书` - 支持对一个带通配符域名（该\*号同级别的全部明细域名）保护，申请证书时，如申请`*.wangchenxu.net`,那么该证书支持`a.wangchenxu.net`, `a1.wangchenxu.net`, `a2.wangchenxu.net`...以此类推，但是不支持`b.a.wangchenxu.net`, `b1.a.wangchenxu.net`...以此类推。如需支持，需另外再申请一张`*.a.wangchenxu.net`证书，部分 CA 机构提供的`通配符证书`还支持同时保护多个普通域名，如 `Let's Encrypt ACME v2` 证书
+* `通配符证书` - 支持对一个带通配符域名（该\*号同级别的全部明细域名）保护，申请证书时，如申请`*.fierflame.com`,那么该证书支持`a.fierflame.com`, `a1.fierflame.com`, `a2.fierflame.com`...以此类推，但是不支持`b.a.fierflame.com`, `b1.a.fierflame.com`...以此类推。如需支持，需另外再申请一张`*.a.fierflame.com`证书，部分 CA 机构提供的`通配符证书`还支持同时保护多个普通域名，如 `Let's Encrypt ACME v2` 证书
 
 ## 安装 certbot-auto
 
@@ -47,7 +47,7 @@ chmod a+x certbot-auto
 
 `certbot-auto`命令示例：
 ```
-certbot-auto certonly -d wangchenxu.net -d *.wangchenxu.net --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory 
+certbot-auto certonly -d fierflame.com -d *.fierflame.com --manual --preferred-challenges dns --server https://acme-v02.api.letsencrypt.org/directory 
 ```
 
 参数说明
@@ -65,7 +65,7 @@ certbot-auto certonly -d wangchenxu.net -d *.wangchenxu.net --manual --preferred
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 Plugins selected: Authenticator manual, Installer None
 Enter email address (used for urgent renewal and security notices) (Enter 'c' to
-cancel): www@wangchenxu.net   # <---- 这个不一定有，如果有，则输入邮箱，然后回车
+cancel): www@fierflame.com   # <---- 这个不一定有，如果有，则输入邮箱，然后回车
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please read the Terms of Service at
@@ -87,8 +87,8 @@ encrypting the web, EFF news, campaigns, and ways to support digital freedom.
 Plugins selected: Authenticator manual, Installer None
 Obtaining a new certificate
 Performing the following challenges:
-dns-01 challenge for wangchenxu.net
-dns-01 challenge for wangchenxu.net   # <------ 这里显示的是认证的域名
+dns-01 challenge for fierflame.com
+dns-01 challenge for fierflame.com   # <------ 这里显示的是认证的域名
 # <!----- 如果设置了多个域名，会显示多条，特别的，对于通配符域名会显示父域名  ---------->
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -105,7 +105,7 @@ Are you OK with your IP being logged?
 # <!----- 设置的 TXT 记录在全部被验证后才可以删除，当然你也可以不删除              ---------->
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please deploy a DNS TXT record under the name
-_acme-challenge.wangchenxu.net with the following value:     # <------ 需要设置 TXT 记录的命名
+_acme-challenge.fierflame.com with the following value:     # <------ 需要设置 TXT 记录的命名
 
 bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA              # <------ TXT 记录值
 # 特别说明，对于同一个域名可以添加多个相同优先级的 TXT 记录
@@ -120,11 +120,11 @@ Cleaning up challenges
 
 IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at:
-   /etc/letsencrypt/live/wangchenxu.net/fullchain.pem              # <---- 证书生成的位置
+   /etc/letsencrypt/live/fierflame.com/fullchain.pem              # <---- 证书生成的位置
    Your key file has been saved at:
-   /etc/letsencrypt/live/wangchenxu.net/privkey.pem              # <---- 密钥生成的位置
+   /etc/letsencrypt/live/fierflame.com/privkey.pem              # <---- 密钥生成的位置
 # <------ 实际上除了生产以上两个文件外，还会生成其他的几个文件，但所给的文件的所属目录一定相同 ------->
-# <------ 在这里的目录为`/etc/letsencrypt/live/wangchenxu.net`，后面介绍将用到此目录路径 ------->
+# <------ 在这里的目录为`/etc/letsencrypt/live/fierflame.com`，后面介绍将用到此目录路径 ------->
    Your cert will expire on 2019-06-27. To obtain a new or tweaked   # <---- 有效期截止日期
    version of this certificate in the future, simply run certbot-auto
    again. To non-interactively renew *all* of your certificates, run
@@ -148,9 +148,9 @@ dig -t txt 域名 @DNS
 * `域名` - 为要查询的域名，可以多个
 * `@DNS` - 表示采用的服务，可选，采用`@8.8.8.8`可以避免缓存问题
 
-例如执行`dig -t txt _acme-challenge.wangchenxu.net @8.8.8.8`得到的结果是：
+例如执行`dig -t txt _acme-challenge.fierflame.com @8.8.8.8`得到的结果是：
 ```
-; <<>> DiG 9.11.3-1ubuntu1.5-Ubuntu <<>> -t txt _acme-challenge.wangchenxu.net @8.8.8.8
+; <<>> DiG 9.11.3-1ubuntu1.5-Ubuntu <<>> -t txt _acme-challenge.fierflame.com @8.8.8.8
 ;; global options: +cmd
 ;; Got answer:
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 5608
@@ -159,11 +159,11 @@ dig -t txt 域名 @DNS
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 512
 ;; QUESTION SECTION:
-;_acme-challenge.wangchenxu.net.	IN	TXT
+;_acme-challenge.fierflame.com.	IN	TXT
 
 ;; ANSWER SECTION:
-_acme-challenge.wangchenxu.net.	599 IN	TXT	"bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA"
-_acme-challenge.wangchenxu.net.	599 IN	TXT	"a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2hmPszNYw"
+_acme-challenge.fierflame.com.	599 IN	TXT	"bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA"
+_acme-challenge.fierflame.com.	599 IN	TXT	"a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2hmPszNYw"
 
 ;; Query time: 95 msec
 ;; SERVER: 8.8.8.8#53(8.8.8.8)
@@ -172,14 +172,14 @@ _acme-challenge.wangchenxu.net.	599 IN	TXT	"a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2h
 ```
 我们将以`;`开头的部分和空行过滤掉，得到：
 ```
-_acme-challenge.wangchenxu.net.	238 IN	TXT	"bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA"
-_acme-challenge.wangchenxu.net.	238 IN	TXT	"a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2hmPszNYw"
+_acme-challenge.fierflame.com.	238 IN	TXT	"bY1cQdzRXC4GD-0TPYV3gSnNI2fReB4CPAJHU9QJ1QA"
+_acme-challenge.fierflame.com.	238 IN	TXT	"a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2hmPszNYw"
 ```
-其中`_acme-challenge.wangchenxu.net.`及为我们查询的域名，最后引号内的为设置的TXT记录，如果其记录复合，则表示设置成功
+其中`_acme-challenge.fierflame.com.`及为我们查询的域名，最后引号内的为设置的TXT记录，如果其记录复合，则表示设置成功
 
 ## 证书的说明
 
-上面示例中的目录路径为`/etc/letsencrypt/live/wangchenxu.net`
+上面示例中的目录路径为`/etc/letsencrypt/live/fierflame.com`
 但是此目录中所包含的文件不只是以上几个文件，在此目录下执行`ls`我们可以看到，有以下几个文件：
 * `privkey.pem` - 证书的私钥
 * `fullchain.pem` - 大多数服务器软件中使用的证书文件
@@ -188,4 +188,3 @@ _acme-challenge.wangchenxu.net.	238 IN	TXT	"a0vjK4_laS7vnGJNEglqzpbG3UagxCjAoD2h
 * `README` - 对以上四个文件的说明
 
 对于这几个文件，不要删除或移动，使用时，建议直接配置为此文件或者做一软连接后使用。
-
