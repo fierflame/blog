@@ -37,14 +37,7 @@ Date.prototype.format = function (format = 'YYYY-MM-DD') {
 
 
 const navlist = [
-	{ title: '提问', url: 'https://gitee.com/wangchenxu-net/blog/issues' },
 	{ title: '开发者工具', url: 'http://tool.fierflame.com/' },
-	// { title: 'git', url: 'http://git.fierflame.com/' },
-	// { title: '算法', url: 'http://algorithm.fierflame.com/' },
-	// { title: 'MTJSON', url: 'http://mtjson.fierflame.com/' },
-	// { title: 'functmpl', url: 'http://functmpl.fierflame.com/' },
-	// { title: 'ECMAScript 教程', url: 'http://ecmascript.fierflame.com/' },
-	// { title: '直播间', url: 'http://www.douyu.com/xulive' },
 ];
 gensety.context.set('navlist',() => navlist);
 
