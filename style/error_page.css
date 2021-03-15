@@ -80,7 +80,7 @@ main{
 		animation: none;
 		background: white;
 	}
-	body{
+	html{
 		background:#FFF;
 	}
 }

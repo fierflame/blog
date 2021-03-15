@@ -125,17 +125,6 @@ var initSearch = (function(){
 	}
 })();
 
-
-function openBookSidebar() {
-	var bookSidebar = document.getElementById("book-sidebar");
-	var className = bookSidebar.className.split(/ +/);
-	for (var i = className.length - 1; i >= 0; i--) {
-		if (className[i] === "open") {
-			return ;
-		}
-	}
-	bookSidebar.className = bookSidebar.className + " open";
-}
 function createClipboard(div) {
 	var data = div.dataset.clipboardData;
 	var dataType = div.dataset.clipboardType;
@@ -289,28 +278,28 @@ var createArticleNav = (function(){
 		}
 	};
 })();
-window.addEventListener("load", function(){
+// window.addEventListener("load", function(){
 
-	var article = document.querySelector("article");
-	if (!(article && article.hasAttribute("need-article-nav"))) {
-		return;
-	}
-	var nav = createArticleNav(article);
-	if (nav) {
-		var div = document.createElement("div");
-		div.appendChild(document.createTextNode("目录"));
-		div.appendChild(nav);
-		div.className = "style-context-box blog-toc";
-		article.parentNode.insertBefore(div, article);
-	}
-});
+// 	var article = document.querySelector("article");
+// 	if (!(article && article.hasAttribute("need-article-nav"))) {
+// 		return;
+// 	}
+// 	var nav = createArticleNav(article);
+// 	if (nav) {
+// 		var div = document.createElement("div");
+// 		div.appendChild(document.createTextNode("目录"));
+// 		div.appendChild(nav);
+// 		div.className = "style-context-box blog-toc";
+// 		article.parentNode.insertBefore(div, article);
+// 	}
+// });
 
-window.addEventListener("load", function(){
-	var clipboarddatas = document.querySelectorAll("*[data-clipboard-data]");
-	for (var i = 0; i < clipboarddatas.length; i++) {
-		 createClipboard(clipboarddatas[i]);
-	}
-});
+// window.addEventListener("load", function(){
+// 	var clipboarddatas = document.querySelectorAll("*[data-clipboard-data]");
+// 	for (var i = 0; i < clipboarddatas.length; i++) {
+// 		 createClipboard(clipboarddatas[i]);
+// 	}
+// });
 window.addEventListener("load", function(){
 	document.querySelectorAll("code").forEach(function(el) {
 		renderLanguageHighlight(el, el.className);
@@ -318,54 +307,54 @@ window.addEventListener("load", function(){
 });
 
 
-window.addEventListener("load", function(){
-	document.querySelectorAll("[data-page-card]").forEach(function(card) {
-		var title = card.dataset.title || document.title;
-		var url = card.dataset.url || location.href;
-		var qrcodeDiv = document.createElement("div");
-		var titleDiv = document.createElement("div");
-		var urlDiv = document.createElement("div");
-		new QRCode(qrcodeDiv, {
-			text: url,
-			width: 128,
-			height: 128,
-			correctLevel : QRCode.CorrectLevel.H
-		});
-		titleDiv.appendChild(document.createTextNode(title));
-		urlDiv.appendChild(document.createTextNode(url));
-		qrcodeDiv.title = "";
-		qrcodeDiv.className = "qrcode"
-		titleDiv.className = "title"
-		urlDiv.className = "url"
-		card.appendChild(qrcodeDiv);
-		card.appendChild(urlDiv);
-		card.appendChild(titleDiv);
-		card.className = "only-print";
-	});
-});
+// window.addEventListener("load", function(){
+// 	document.querySelectorAll("[data-page-card]").forEach(function(card) {
+// 		var title = card.dataset.title || document.title;
+// 		var url = card.dataset.url || location.href;
+// 		var qrcodeDiv = document.createElement("div");
+// 		var titleDiv = document.createElement("div");
+// 		var urlDiv = document.createElement("div");
+// 		new QRCode(qrcodeDiv, {
+// 			text: url,
+// 			width: 128,
+// 			height: 128,
+// 			correctLevel : QRCode.CorrectLevel.H
+// 		});
+// 		titleDiv.appendChild(document.createTextNode(title));
+// 		urlDiv.appendChild(document.createTextNode(url));
+// 		qrcodeDiv.title = "";
+// 		qrcodeDiv.className = "qrcode"
+// 		titleDiv.className = "title"
+// 		urlDiv.className = "url"
+// 		card.appendChild(qrcodeDiv);
+// 		card.appendChild(urlDiv);
+// 		card.appendChild(titleDiv);
+// 		card.className = "only-print";
+// 	});
+// });
 
 
-window.addEventListener("load", function(){
-	var search = initSearch({
-		"搜狗": "https://www.sogou.com/web?query=site%3Afierflame.com+%s",
-	});
-	var inited = false;
-	var searchArea = document.querySelectorAll(".search-area");
-	if (!searchArea.length) { return; }
+// window.addEventListener("load", function(){
+// 	var search = initSearch({
+// 		"搜狗": "https://www.sogou.com/web?query=site%3Afierflame.com+%s",
+// 	});
+// 	var inited = false;
+// 	var searchArea = document.querySelectorAll(".search-area");
+// 	if (!searchArea.length) { return; }
 
-	function dataed(data) {
-		search.add(data.map, data.root);
-		if (inited) {
-			return ;
-		}
-		inited = true;
-		document.querySelectorAll(".search-area").forEach(search);
-	}
-	mapSource.forEach(function(url){
-		fetch(url).then(x=>x.json()).then(dataed)
-	})
+// 	function dataed(data) {
+// 		search.add(data.map, data.root);
+// 		if (inited) {
+// 			return ;
+// 		}
+// 		inited = true;
+// 		document.querySelectorAll(".search-area").forEach(search);
+// 	}
+// 	mapSource.forEach(function(url){
+// 		fetch(url).then(x=>x.json()).then(dataed)
+// 	})
 	
-});
+// });
 
 
 window.addEventListener("load", function(){
