@@ -8,5 +8,4 @@ pages:
     paths:
     - public
   only:
-  - html
-
+  - pages
